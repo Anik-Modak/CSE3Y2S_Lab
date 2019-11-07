@@ -1,3 +1,4 @@
+Assignment: #3Y2S 2019 - 1710476141
 1. ipconfig
 2. ping 10.100.0.5
 3. ping 10.100.0.5 /t
