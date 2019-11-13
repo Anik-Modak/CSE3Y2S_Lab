@@ -6,7 +6,7 @@ public class ClientProgram{
 		try{      
 			Socket s=new Socket("10.110.55.48", 5555);  
 			DataOutputStream dout = new DataOutputStream(s.getOutputStream());  
-			dout.writeUTF("Hi! I am Shuva ");  
+			dout.writeUTF("Hi! I am Anik");  
 			dout.flush();  
 			dout.close();  
 			s.close();  
