@@ -29,7 +29,7 @@ public class FileServer extends Thread {
 
 	private void saveFile(Socket clientSock) throws IOException {
 		DataInputStream dis = new DataInputStream(clientSock.getInputStream());
-		FileOutputStream fos = new FileOutputStream("output.jpg");
+		FileOutputStream fos = new FileOutputStream("ReceivedFile.jpg");
 		byte[] buffer = new byte[4096];
 		
 		int filesize = 15123; // Send file size in separate msg

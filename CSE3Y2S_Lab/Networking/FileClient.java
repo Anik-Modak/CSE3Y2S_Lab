@@ -30,7 +30,7 @@ public class FileClient {
 	}
 	
 	public static void main(String[] args) {
-		FileClient fc = new FileClient("10.110.54.45", 1988, "cat.jpg");
+		FileClient fc = new FileClient("10.110.54.45", 1988, "SendFile.jpg");
 	}
 
 }
