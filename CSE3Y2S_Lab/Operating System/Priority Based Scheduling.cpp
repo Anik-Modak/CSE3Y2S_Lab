@@ -11,7 +11,7 @@ int main()
     cout<<"\nEnter Burst Time and Priority:\n";
     for(int i=0; i<n; i++)
     {
-        cout<<"\nProcess P["<<i+1<<"]: ";
+        cout<<"Process P["<<i+1<<"]: ";
         cin>>bt[i]>>pr[i];
         p[i]=i+1;
     }
@@ -22,8 +22,8 @@ int main()
         int pos = i;
         for(int j=i+1; j<n; j++)
         {
-            if(pr[j]<pr[pos])
-                pos=j;
+            if(pr[j] < pr[pos])
+                pos = j;
         }
 
         int temp=pr[i];
