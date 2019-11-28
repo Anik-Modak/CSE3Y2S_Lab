@@ -1,45 +1,63 @@
-DIS MACRO STR
-MOV AH,09H
-LEA DX,STR
-INT 21H
-ENDM
 DATA SEGMENT
-    MSG1 DB "ENTER YOUR CHARACTER : $"
-    MSG2 DB "CONVERTED CHARACTER IS : $"
-    STR1 DB 20 DUP('$')
-    LINE DB 10,13,'$'
-DATA ENDS
+    MSG1 DB 10,13,'Enter your String :- $'
+    MSG3 DB 10,13,'Converted String : $'
+   
+    P1 LABEL BYTE
+    M1 DB 0FFH
+    L1 DB ?
+    P11 DB 0FFH DUP ('$')
+DATA ENDS 
+
+DISPLAY MACRO MSG
+    MOV AH,9
+    LEA DX,MSG
+    INT 21H
+ENDM 
 
 CODE SEGMENT
-          ASSUME DS:DATA,CS:CODE
+    ASSUME CS:CODE,DS:DATA
 START:
         MOV AX,DATA
-        MOV DS,AX
-        DIS MSG1
-        MOV AH,0AH
-        LEA DX,STR1
+        MOV DS,AX                
+               
+        DISPLAY MSG1
+       
+        LEA DX,P1
+        MOV AH,0AH    
         INT 21H
-        DIS LINE
-        MOV CH,00
-        MOV CL,BYTE PTR[STR1+1]
-        LEA SI,STR1+2
-    L1: MOV AH,BYTE PTR[SI]
-        CMP AH,'A'
-        JL L4
-        CMP AH,'Z'
-        JG L2
-        ADD BYTE PTR[SI],32
-        JMP L3
-     L2:CMP AH,'a'
-        JL L4
-        CMP AH,'z'
-        JG L4
-        SUB BYTE PTR[SI],32
-     L3:INC SI
-        LOOP L1
-        DIS MSG2
-        DIS STR1+2
-     L4:MOV AH,4CH
+       
+  
+        DISPLAY P11
+                   
+        DISPLAY MSG3
+               
+        LEA SI,P11
+              
+        MOV CL,L1
+        MOV CH,0       
+CHECK:
+        CMP [SI],41H
+        JB DONE
+       
+        CMP [SI],5BH
+        JB LWR
+       
+        CMP [SI],61H
+        JB DONE
+       
+        CMP [SI],7BH
+        JG DONE
+       
+UPR:    SUB [SI],20H
+        JMP DONE
+LWR:    ADD [SI],20H
+            
+DONE:   INC SI
+        LOOP CHECK
+               
+        DISPLAY P11
+                               
+        MOV AH,4CH
         INT 21H
 CODE ENDS
 END START
