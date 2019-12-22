@@ -5,14 +5,14 @@ public class MyMail {
     public static void main(String[] args ) throws Exception{
         String server = "localhost";
         int port = 25;
-        String from= "anikmail@modak.com";
-        String to = "happymail@modak.com";
+        String from= "modak@bd.com";
+        String to = "anik@bd.com";
         Socket socket = new Socket(server, port);
         PrintWriter os = new PrintWriter(socket.getOutputStream(),true);
         BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         
         System.out.println("HELO " + InetAddress.getLocalHost().getHostName());
-        os.println("HELO "+"modak.com");
+        os.println("HELO "+"bd.com");
         System.out.println("Response1: "+bReader.readLine());
         
         System.out.println("MAIL From:<" + from + ">");
@@ -27,8 +27,8 @@ public class MyMail {
         os.println("DATA");
         System.out.println("Response 4: "+bReader.readLine());
         
-        os.println("From: anikmail@modak.com");
-        os.println("To: happymail@modak.com");
+        os.println("From: modak@bd.com");
+        os.println("To: anik@bd.com");
         os.println("Subject: VU Programming Contest");
 	os.println();
         os.println("Hi Happy, VU programming contest will be held on 15th December.");
