@@ -90,6 +90,6 @@ int main()
             need[i][j] = mx[i][j] - alloc[i][j];
     }
 
-    if(isSafe(avail, maxm, allot, need));
+    //if(isSafe(avail, mx, alloc, need));
     return 0;
 }

@@ -8,7 +8,6 @@ MSG2 DB 'Number of vowels: $'
 MSG3 DB 'Number of consonants: $'
 
 .CODE 
-
 MAIN PROC 
      
 MOV AX, @DATA
