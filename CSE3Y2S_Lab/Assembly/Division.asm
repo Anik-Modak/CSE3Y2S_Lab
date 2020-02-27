@@ -35,7 +35,7 @@ main proc
     int 21h  
     
     mov al, a
-    mul b 
+    div b 
     mov dl, al 
     add dl, 48 
     
