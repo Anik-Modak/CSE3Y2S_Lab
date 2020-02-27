@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
 void findWaitingTime(int n, int bt[], int wt[])
@@ -30,27 +30,27 @@ void findAverageTime(int n, int bt[])
     {
         total_wt = total_wt + wt[i];
         total_tat = total_tat + tat[i];
-        cout << "   " << i+1 << "\t\t" << bt[i] <<"\t    "<< wt[i] <<"\t\t  " << tat[i] <<endl;
+        cout << "   " << i+1 << "\t\t" << bt[i] <<"\t    "<< wt[i] <<"\t\t  " << tat[i] << "\n";
     }
 
-    cout << "\nAverage waiting time = "<< (float)total_wt / (float)n;
-    cout << "\nAverage turn around time = "<< (float)total_tat / (float)n;
+    cout << "\nAverage waiting time = "<< total_wt/(float)n<<"\n";
+    cout << "\nAverage turn around time = "<< total_tat/(float)n<<"\n";
 }
-
 
 int main()
 {
     int n;
-    cout<<"Enter numbers of process: ";
+    cout<<"Enter Total Process: ";
     cin>>n;
 
     int bt[n], wt = 0;
     cout<<"Enter BURST Time: \n";
     for(int i=0; i<n; i++)
     {
-        cout<<"Process: P"<<i+1<<": ";
+        cout<<"Process P["<<i+1<<"] : ";
         cin>>bt[i];
     }
     findAverageTime(n,  bt);
     return 0;
 }
+

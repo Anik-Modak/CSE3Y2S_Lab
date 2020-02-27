@@ -1,66 +1,59 @@
+//Anik_Modak
 #include<bits/stdc++.h>
-
+#define pii pair<int, int>
 using namespace std;
 
-struct Process
-{
-    int pid;     // process ID
-    int bt;      // burst Time
-};
-
-bool comparison(Process a, Process b)
-{
-    return (a.bt < b.bt);
-}
-
-void findWaitingTime(Process proc[], int n, int wt[])
+vector<pii> bt;
+void findWaitingTime(int n, int wt[])
 {
     wt[0] = 0;
     for (int i = 1; i < n ; i++)
     {
-        wt[i] = proc[i-1].bt + wt[i-1] ;
+        wt[i] =  bt[i-1].first + wt[i-1];
     }
 }
 
-void findTurnAroundTime(Process proc[], int n, int wt[], int tat[])
+void findTurnAroundTime(int n, int wt[], int tat[])
 {
     for (int i = 0; i < n ; i++)
     {
-        tat[i] = proc[i].bt + wt[i];
+        tat[i] = bt[i].first + wt[i];
     }
 }
 
-void findAverageTime(Process proc[], int n)
+void findAverageTime(int n)
 {
     int wt[n], tat[n], total_wt = 0, total_tat = 0;
+    findWaitingTime(n, wt);
+    findTurnAroundTime(n, wt, tat);
 
-    findWaitingTime(proc, n, wt);
-    findTurnAroundTime(proc, n, wt, tat);
-
-    cout << "\nProcesses "<< " Burst time "
-         << " Waiting time " << " Turn around time\n";
-
+    cout << "Processes  "<< " Burst time  "<< " Waiting time  " << " Turn around time\n";
     for (int i = 0; i < n; i++)
     {
         total_wt = total_wt + wt[i];
         total_tat = total_tat + tat[i];
-        cout << " " << proc[i].pid << "\t\t"
-             << proc[i].bt << "\t " << wt[i]
-             << "\t\t " << tat[i] <<endl;
+        cout << "   " << (bt[i].second + 1) << "\t\t" << bt[i].first <<"\t    "<< wt[i] <<"\t\t  " << tat[i] << "\n";
     }
 
-    cout << "Average waiting time = "
-         << (float)total_wt / (float)n;
-    cout << "\nAverage turn around time = "
-         << (float)total_tat / (float)n;
+    cout << "\nAverage waiting time = "<< total_wt/(float)n<<"\n";
+    cout << "\nAverage turn around time = "<< total_tat/(float)n<<"\n";
 }
 
 int main()
 {
-    Process proc[] = {{1, 10}, {2, 29}, {3, 3}, {4, 7}, {5, 12}};
-    int n = sizeof proc / sizeof proc[0];
+    int n;
+    cout<<"Enter Total Process: ";
+    cin>>n;
 
-    sort(proc, proc + n, comparison);
-    findAverageTime(proc, n);
+    int burst;
+    cout<<"Enter BURST Time: \n";
+    for(int i=0; i<n; i++)
+    {
+        cout<<"Process: P"<<i+1<<": ";
+        cin>>burst;
+        bt.push_back({burst, i});
+    }
+    sort(bt.begin(), bt.end());
+    findAverageTime(n);
     return 0;
 }
