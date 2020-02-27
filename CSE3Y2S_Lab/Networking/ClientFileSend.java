@@ -33,7 +33,7 @@ public class ClientFileSend {
 	
 	public static void main(String args[])throws Exception{
   
-		Socket s=new Socket("localhost",5555);  
+		Socket s=new Socket("localhost",1988);  
 		DataInputStream din=new DataInputStream(s.getInputStream());  
 		DataOutputStream dout=new DataOutputStream(s.getOutputStream());  
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));  
@@ -53,6 +53,6 @@ public class ClientFileSend {
 		dout.writeUTF(fileSize);  			
 		dout.flush(); 
 		
-		ClientFileSend fc = new ClientFileSend("localhost", 5555, fileName);
+		ClientFileSend fc = new ClientFileSend("localhost", 1988, fileName);
 	}  
 }

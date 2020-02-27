@@ -21,7 +21,7 @@ public class ServerFileReceived extends Thread {
 
 	public void saveFile(Socket clientSock, String fileName, int filesize) throws IOException {
 		DataInputStream dis = new DataInputStream(clientSock.getInputStream());
-		FileOutputStream fos = new FileOutputStream("output.txt");
+		FileOutputStream fos = new FileOutputStream("serverfile.txt");
 		byte[] buffer = new byte[4096];
 		
 		int read = 0;
@@ -40,23 +40,23 @@ public class ServerFileReceived extends Thread {
 	
 	public static void main(String args[])throws Exception{  
 
-		ServerSocket ss = new ServerSocket(5555);  
+		ServerSocket ss = new ServerSocket(1988);  
 		Socket s = ss.accept();  
 		DataInputStream din=new DataInputStream(s.getInputStream());  
 		DataOutputStream dout=new DataOutputStream(s.getOutputStream());  
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));  
   
 		String str;
-		System.out.println("Server question: ");
-		str =br.readLine();  
+		System.out.println("Server ask: ");
+		str =br.readLine(); //fileName 
 		dout.writeUTF(str);  
 		dout.flush();  
   
 		String fileName = din.readUTF();  
 		System.out.println("Client reply: "+fileName); 
 
-		System.out.println("Server question: ");
-		str =br.readLine();  
+		System.out.println("Server ask: ");
+		str =br.readLine(); //fileSize 
 		dout.writeUTF(str);  
 		dout.flush(); 
   
@@ -64,7 +64,7 @@ public class ServerFileReceived extends Thread {
 		System.out.println("Client reply: "+str ); 
 		int fileSize = Integer.parseInt(str);
 		
-		ServerFileReceived fs = new ServerFileReceived(fileName, fileSize, 5555);
+		ServerFileReceived fs = new ServerFileReceived(fileName, fileSize, 1988);
 		din.close();  
 		s.close();  
 		ss.close();  
