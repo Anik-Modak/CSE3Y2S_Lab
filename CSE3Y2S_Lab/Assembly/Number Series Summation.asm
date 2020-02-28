@@ -3,7 +3,7 @@
 
 .DATA
 MSG1 DB 'Enter number: $'
-MSG2 DB 10, 13,'Factorial: $' 
+MSG2 DB 10, 13,'Total sum: $' 
 
 .CODE      
 MAIN PROC  
@@ -16,20 +16,21 @@ MAIN PROC
     MOV AH, 1
     INT 21H  
               
-    SUB AX, 30H
-    MOV CX, 3 
+    SUB AL, 30H
+    MOV CL, AL 
     
     MOV AH,9
     LEA DX, MSG2
     INT 21H
-       
-    MOV AX, 1 
+    
+    XOR CH, CH
+    XOR AL, AL 
     TOP:
-        ADD CX
+        ADD AL, CL
         LOOP TOP
         
-    ADD AX, 30H
-    MOV DX, AX    
+    ADD AL, 30H
+    MOV DL, AL    
     MOV AH, 2
     INT 21H
     

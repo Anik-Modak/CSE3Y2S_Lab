@@ -17,12 +17,13 @@ MAIN PROC
     INT 21H  
               
     SUB AX, 30H
-    MOV CX, 3 
+    MOV CX, AX 
     
     MOV AH,9
     LEA DX, MSG2
     INT 21H
        
+    XOR CH, CH
     MOV AX, 1 
     TOP:
         MUL CX
