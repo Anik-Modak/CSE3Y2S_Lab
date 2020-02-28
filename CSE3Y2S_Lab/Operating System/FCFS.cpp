@@ -25,7 +25,7 @@ void findAverageTime(int n, int bt[])
     findWaitingTime(n, bt, wt);
     findTurnAroundTime(n, bt, wt, tat);
 
-    cout << "Processes  "<< " Burst time  "<< " Waiting time  " << " Turn around time\n";
+    cout << "\nProcesses  "<< " Burst time  "<< " Waiting time  " << " Turn around time\n";
     for (int i = 0; i < n; i++)
     {
         total_wt = total_wt + wt[i];
@@ -39,6 +39,7 @@ void findAverageTime(int n, int bt[])
 
 int main()
 {
+    //freopen("fcfs.txt","r",stdin);
     int n;
     cout<<"Enter Total Process: ";
     cin>>n;
