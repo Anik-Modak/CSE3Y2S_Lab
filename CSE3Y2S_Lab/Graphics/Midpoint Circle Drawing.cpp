@@ -1,14 +1,11 @@
-#include<iostream>
 #include<graphics.h>
+#include<iostream>
 using namespace std;
 
-void drawcircle(int x0, int y0, int radius)
+void drawcircle(int x0, int y0, int r)
 {
-    int x = radius;
-    int y = 0;
-    int err = 0;
-
-    while (x >= y)
+    int x = 0, y = r, p = 1-r;
+    while(x < y)
     {
         putpixel(x0 + x, y0 + y, RED);
         putpixel(x0 + y, y0 + x, RED);
@@ -19,34 +16,32 @@ void drawcircle(int x0, int y0, int radius)
         putpixel(x0 + y, y0 - x, RED);
         putpixel(x0 + x, y0 - y, RED);
 
-        if (err <= 0)
+        x ++;
+        if(p < 0)
+            p = p + 2*x + 1;
+        else
         {
-            y += 1;
-            err += 2*y + 1;
+            y --;
+            p = p + 2*x + 1 - 2*y;
         }
-
-        if (err > 0)
-        {
-            x -= 1;
-            err -= 2*x + 1;
-        }
+        //delay(1);
     }
 }
 
 int main()
 {
-    freopen("MidpontCircle.txt","r",stdin);
-    int gd=DETECT, gm=DETECT;
-    initgraph(&gd,&gm,"");
+    //freopen("MidpontCircle.txt","r",stdin);
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "");
 
-    int r, x, y;
+    int r, x, y; //100 150 150
     cout<<"Enter radius of circle: ";
     cin>>r;
 
     cout<<"\nEnter co-ordinates of center(x and y): ";
     cin>>x>>y;
-
     drawcircle(x, y, r);
+
     getch();
     return 0;
 }

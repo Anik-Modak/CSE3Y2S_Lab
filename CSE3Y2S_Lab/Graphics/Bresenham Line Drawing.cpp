@@ -1,48 +1,47 @@
-#include<iostream>
 #include<graphics.h>
+#include<iostream>
 using namespace std;
 
 void drawline(int x0, int y0, int x1, int y1)
 {
     int dx, dy, p, x, y;
-    dx=x1-x0;
-    dy=y1-y0;
+    dx = x1 - x0;
+    dy = y1 - y0;
 
-    x=x0;
-    y=y0;
-    p=2*dy-dx;
+    x = x0, y = y0;
+    p = 2*dy - dx;
 
-    while(x<x1)
+    while(x < x1)
     {
-        if(p>=0)
+        if(p < 0)
         {
-            putpixel(x,y,RED);
-            y=y+1;
-            p=p+2*dy-2*dx;
+            p = p + 2*dy;
+            putpixel(x, y, RED);
         }
         else
         {
-            putpixel(x,y,RED);
-            p=p+2*dy;
+            p = p + 2*dy - 2*dx;
+            putpixel(x, y, RED);
+            y++;
         }
-        x=x+1;
+        x++;
     }
 }
 
 int main()
 {
-    freopen("BresenhamLine.txt","r",stdin);
-    int gd=DETECT, gm=DETECT;
-    initgraph(&gd,&gm,"");
+    //freopen("BresenhamLine.txt","r",stdin);
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "");
 
-    int x0, y0, x1, y1;
+    int x0, y0, x1, y1; //100 100 200 200
     cout<<"Enter co-ordinates of first point: ";
     cin>>x0>>y0;
 
     cout<<"\nEnter co-ordinates of second point: ";
     cin>>x1>>y1;
-
     drawline(x0, y0, x1, y1);
+
     getch();
     return 0;
 }

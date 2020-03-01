@@ -2,35 +2,35 @@
 
 int main()
 {
-    int gd=DETECT,gm;
-    initgraph(&gd,&gm,"");
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "");
 
-    for(int t=1; t<=50; t++)
+    for(int i=0; i<=100; i++)
     {
-        setcolor(GREEN);
-        line(rand()%450,rand()%450,rand()%450,rand()%450);
+        setcolor(RED);
+        line(rand()%100, rand()%150, rand()%200, rand()%250);
         delay(100);
         cleardevice();
 
-        setcolor(RED);
-        line(rand()%350,rand()%350,rand()%350,rand()%350);
+        setcolor(GREEN);
+        line(rand()%200, rand()%250, rand()%300, rand()%350);
         delay(100);
         cleardevice();
 
         setcolor(BLUE);
-        line(rand()%450,rand()%350,rand()%450,rand()%350);
+        line(rand()%300, rand()%350, rand()%400, rand()%450);
         delay(100);
         cleardevice();
 
         setcolor(YELLOW);
-        line(rand()%450,rand()%350,rand()%450,rand()%350);
+        line(rand()%400, rand()%400, rand()%500, rand()%550);
         delay(100);
         cleardevice();
 
         setcolor(GREEN);
-        line(rand()%450,rand()%450,rand()%450,rand()%450);
+        line(rand()%250,rand()%350,rand()%450,rand()%550);
         setcolor(RED);
-        line(rand()%350,rand()%350,rand()%350,rand()%350);
+        line(rand()%350,rand()%450,rand()%350,rand()%450);
         setcolor(BLUE);
         line(rand()%450,rand()%350,rand()%450,rand()%350);
         setcolor(YELLOW);
@@ -40,4 +40,3 @@ int main()
     getch();
     return 0;
 }
-
