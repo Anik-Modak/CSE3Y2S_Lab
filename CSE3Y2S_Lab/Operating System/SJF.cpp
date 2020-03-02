@@ -4,48 +4,37 @@
 using namespace std;
 
 vector<pii> bt;
-void findWaitingTime(int n, int wt[])
-{
-    wt[0] = 0;
-    for (int i = 1; i < n ; i++)
-    {
-        wt[i] =  bt[i-1].first + wt[i-1];
-    }
-}
-
-void findTurnAroundTime(int n, int wt[], int tat[])
-{
-    for (int i = 0; i < n ; i++)
-    {
-        tat[i] = bt[i].first + wt[i];
-    }
-}
-
 void findAverageTime(int n)
 {
     int wt[n], tat[n], total_wt = 0, total_tat = 0;
-    findWaitingTime(n, wt);
-    findTurnAroundTime(n, wt, tat);
+    wt[0] = 0;
+    tat[0] = bt[0].first;
+    for(int i=1; i<n; i++)
+    {
+        wt[i] = bt[i-1].first + wt[i-1];
+        tat[i] = bt[i].first + wt[i];
+    }
 
-    cout << "Processes  "<< " Burst time  "<< " Waiting time  " << " Turn around time\n";
+    cout<<"\nProcesses  "<<" Burst time  "<<" Waiting time "<<" Turn around time\n";
     for (int i = 0; i < n; i++)
     {
         total_wt = total_wt + wt[i];
         total_tat = total_tat + tat[i];
-        cout << "   " << (bt[i].second + 1) << "\t\t" << bt[i].first <<"\t    "<< wt[i] <<"\t\t  " << tat[i] << "\n";
+        cout<<"   "<<(bt[i].second + 1)<<"\t\t"<<bt[i].first <<"\t    "<<wt[i]<<"\t\t  "<<tat[i]<<"\n";
     }
 
-    cout << "\nAverage waiting time = "<< total_wt/(float)n<<"\n";
-    cout << "\nAverage turn around time = "<< total_tat/(float)n<<"\n";
+    cout<<"\nAverage waiting time = "<<total_wt/(double)n<<"\n";
+    cout<<"\nAverage turn around time = "<<total_tat/(double)n<<"\n";
 }
 
 int main()
 {
-    int n;
+    //freopen("sjf.txt","r",stdin);
+    int n; //4
     cout<<"Enter Total Process: ";
     cin>>n;
 
-    int burst;
+    int burst; //6 8 7 3
     cout<<"Enter BURST Time: \n";
     for(int i=0; i<n; i++)
     {
@@ -54,6 +43,6 @@ int main()
         bt.push_back({burst, i});
     }
     sort(bt.begin(), bt.end());
-    findAverageTime(n);
+    findAverageTime(n); //7 13
     return 0;
 }

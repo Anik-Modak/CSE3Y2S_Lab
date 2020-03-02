@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
+#include <bits/stdc++.h>
+using namespace std;
 
 struct Process
 {
@@ -15,18 +17,17 @@ void findWaitingTime(Process proc[], int n, int wt[])
         rt[i] = proc[i].bt;
 
     int complete = 0, t = 0, minm = INT_MAX;
-    int shortest = 0, finish_time;
+    int st = 0, f_time;
     bool check = false;
 
     while (complete != n)
     {
         for (int j = 0; j < n; j++)
         {
-            if ((proc[j].art <= t) &&
-                    (rt[j] < minm) && rt[j] > 0)
+            if ((proc[j].art <= t) && (rt[j] < minm) && rt[j] > 0)
             {
                 minm = rt[j];
-                shortest = j;
+                st = j;
                 check = true;
             }
         }
@@ -36,22 +37,19 @@ void findWaitingTime(Process proc[], int n, int wt[])
             t++;
             continue;
         }
-        rt[shortest]--;
-        minm = rt[shortest];
+        rt[st]--;
+        minm = rt[st];
         if (minm == 0)
             minm = INT_MAX;
 
-        if (rt[shortest] == 0)
+        if (rt[st] == 0)
         {
             complete++;
             check = false;
-            finish_time = t + 1;
-            wt[shortest] = finish_time -
-                           proc[shortest].bt -
-                           proc[shortest].art;
-
-            if (wt[shortest] < 0)
-                wt[shortest] = 0;
+            f_time = t + 1;
+            wt[st] = f_time -proc[st].bt - proc[st].art;
+            if (wt[st] < 0)
+                wt[st] = 0;
         }
         t++;
     }
@@ -59,45 +57,39 @@ void findWaitingTime(Process proc[], int n, int wt[])
 
 void findTurnAroundTime(Process proc[], int n, int wt[], int tat[])
 {
-
     for (int i = 0; i < n; i++)
         tat[i] = proc[i].bt + wt[i];
 }
 
 void findavgTime(Process proc[], int n)
 {
-    int wt[n], tat[n], total_wt = 0,
-                       total_tat = 0;
+    int wt[n], tat[n], total_wt = 0, total_tat = 0;
     findWaitingTime(proc, n, wt);
     findTurnAroundTime(proc, n, wt, tat);
 
-    cout << "Processes "
-         << " Burst time "
-         << " Waiting time "
-         << " Turn around time\n";
-
+    cout << "Processes "<< " Burst time "<< " Waiting time "<< " Turn around time\n";
     for (int i = 0; i < n; i++)
     {
         total_wt = total_wt + wt[i];
         total_tat = total_tat + tat[i];
-        cout << " " << proc[i].pid << "\t\t"
-             << proc[i].bt << "\t\t " << wt[i]
-             << "\t\t " << tat[i] << endl;
+        cout << " " << proc[i].pid << "\t\t" << proc[i].bt << "\t\t " << wt[i]<< "\t\t " << tat[i] << endl;
     }
-
-    cout << "\nAverage waiting time = "
-         << (float)total_wt / (float)n;
-    cout << "\nAverage turn around time = "
-         << (float)total_tat / (float)n;
+    cout <<"\nAverage waiting time = "<< total_wt/(float)n<<"\n";
+    cout <<"\nAverage turn around time = "<< total_tat/(float)n<<"\n";
 }
 
-// Driver code
 int main()
 {
-    Process proc[] = { { 1, 6, 1 }, { 2, 8, 1 },
-        { 3, 7, 2 }, { 4, 3, 3 }
-    };
-    int n = sizeof(proc) / sizeof(proc[0]);
+    //freopen("SRTF.txt","r",stdin);
+    int n;
+    cout<<"Enter Total Processes: ";
+    cin>>n;
+
+    Process proc[n];
+    cout<<"\nEnter process id, burst time and arriving time\n";
+    for(int i=0; i<n; i++)
+        cin>>proc[i].pid>>proc[i].bt>>proc[i].art;
+
     findavgTime(proc, n);
     return 0;
 }
