@@ -1,7 +1,8 @@
 .MODEL SMALL
 .STACK 100H
-.DATA      
-X DB 80 DUP(?)
+.DATA
+N DW 0      
+str DB 80 DUP(?) 
 MSG1 DB 'Input String: $'
 MSG2 DB 10, 13,'Output String: $'
 
@@ -19,40 +20,34 @@ MAIN PROC
     FOR: 
         INT 21H
         CMP AL, 0DH
-        JE SORT
-        MOV X[SI], AL
+        JE BREAK;
+        MOV str[SI], AL
         INC SI
-        JMP FOR
-        
-    SORT: 
-        DEC SI
-        MOV BX, SI
+        JMP FOR 
     
-        EXTER:
-            CMP SI, 0
-            JL PRINT
-            MOV DI, SI   
-        
-        INER: 
-            CMP DI, 0
-            JL EXEND
-            MOV CL, X[DI]
-            CMP X[SI], CL
-            JL MOVE  
+    BREAK: 
+        MOV N, SI
+        MOV SI, 0
             
-        INEND:
-            DEC DI
-            JMP INER 
-            
-        EXEND: 
-            DEC SI
-            JMP EXTER
-        
-        MOVE: 
-            XCHG CL, X[SI]
-            MOV X[DI], CL
-            JMP INEND
-    
+    FOR1:
+    	CMP SI, N
+    	JGE PRINT
+    	MOV DI, SI
+        FOR2:
+	        MOV BL, str[SI]
+	        CMP BL, str[DI]
+	        JL SKIP
+	        XCHG BL, str[DI]
+	        MOV str[SI], BL
+	
+            SKIP:
+                INC DI
+                CMP DI, N
+            	JL FOR2 
+            	
+            INC SI
+            JG FOR1
+            	 
     PRINT: 
         MOV AH,9
         LEA DX, MSG2
@@ -61,9 +56,9 @@ MAIN PROC
     MOV SI, 0
     MOV AH, 2    
     LOOPING:
-        CMP BX, SI
-        JL EXIT
-        MOV DL, X[SI] 
+        CMP SI, N
+        JGE EXIT
+        MOV DL, str[SI] 
         INT 21H
         INC SI
         JMP LOOPING 

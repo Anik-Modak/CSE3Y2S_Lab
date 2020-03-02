@@ -3,7 +3,7 @@
 
 .DATA
 MSG1 DB 'Enter number: $'
-MSG2 DB 10, 13,'Total sum: $' 
+MSG2 DB 10, 13,'Total sum : $'
 
 .CODE      
 MAIN PROC  
@@ -14,28 +14,33 @@ MAIN PROC
     LEA DX, MSG1
     INT 21H
     MOV AH, 1
-    INT 21H  
-              
-    SUB AL, 30H
-    MOV CL, AL 
+    INT 21H
+    
+    SUB AL, 48 
+    MOV CL, AL
+    XOR CH, CH
     
     MOV AH,9
     LEA DX, MSG2
     INT 21H
     
-    XOR CH, CH
-    XOR AL, AL 
+    MOV AL, 0
+    CMP CL, 0
+    JE PRINT
+      
     TOP:
         ADD AL, CL
         LOOP TOP
-        
-    ADD AL, 30H
-    MOV DL, AL    
-    MOV AH, 2
-    INT 21H
+    
+    PRINT:
+        ADD AL, 48
+        MOV DL, AL
+        MOV AH, 2
+        INT 21H
     
     EXIT:
         MOV AH, 4CH
         INT 21H
         MAIN ENDP
 END MAIN
+        
