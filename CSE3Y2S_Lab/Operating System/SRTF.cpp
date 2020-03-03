@@ -37,8 +37,10 @@ void findWaitingTime(Process proc[], int n, int wt[])
             t++;
             continue;
         }
+
         rt[st]--;
         minm = rt[st];
+
         if (minm == 0)
             minm = INT_MAX;
 

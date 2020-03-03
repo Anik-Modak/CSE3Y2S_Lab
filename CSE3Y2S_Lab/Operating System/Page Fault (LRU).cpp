@@ -4,7 +4,7 @@ using namespace std;
 int pageFaults(int pages[], int n, int capacity)
 {
 	unordered_set<int> s;
-	unordered_map<int, int> indexes;
+	map<int, int> indexes;
 
 	int page_faults = 0;
 	for (int i=0; i<n; i++)

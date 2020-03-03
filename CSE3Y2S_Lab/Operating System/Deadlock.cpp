@@ -1,86 +1,95 @@
-#include<stdio.h>
+#include<bits/stdc++.h>
+#define MX 105
+using namespace std;
+
+int alloc[MX][MX], mx[MX][MX], need[MX][MX];
+int safeSeq[MX], work[MX], avail[MX];
+
+void calculateNeed(int P, int R)
+{
+    for (int i = 0; i < P; i++)
+    {
+        for (int j = 0; j < R; j++)
+            need[i][j] = mx[i][j] - alloc[i][j];
+    }
+}
+
+bool isValid(int pi, int R)
+{
+    for(int i=0; i<R; i++)
+    {
+        if(need[pi][i] > work[i])
+            return false;
+    }
+    return true;
+}
+
+bool isSafety(int P, int R)
+{
+    bool finish[P] = {0};
+    for (int i = 0; i < R ; i++)
+        work[i] = avail[i];
+
+    int cnt = 0;
+    while(cnt < P)
+    {
+        bool found = false;
+        for(int i = 0; i < P; i++)
+        {
+            if(finish[i] == 0 && isValid(i, R))
+            {
+                for(int j = 0 ; j < R ; j++)
+                    work[j] += alloc[i][j];
+
+                safeSeq[cnt++] = i;
+                finish[i] = 1;
+                found = true;
+            }
+        }
+        if (found == false)
+            return 0;
+    }
+    return 1;
+}
 
 int main()
 {
-    int i, j, np, nr;
-    printf("Enter the no of process: ");
-    scanf("%d",&np);
-    printf("Enter the no of resources: ");
-    scanf("%d",&nr);
+    int P, R;
+    printf("Number of processes: ");
+    scanf("%d",&P);
 
-    int alloc[np][nr],request[np][nr],avail[nr],r[nr],w[nr];
-    for(i=0; i<nr; i++)
+    printf("Number of resources: ");
+    scanf("%d",&R);
+
+    int instance[R];
+    for(int i=0; i<R; i++)
     {
-        printf("Total Amount of the Resource R%d: ",i+1);
-        scanf("%d",&r[i]);
+        //printf("Number of instance in resource %c: ",i+65);
+        scanf("%d",&instance[i]);
     }
 
-    printf("\nEnter the request matrix:");
-    for(i=0; i<np; i++)
-        for(j=0; j<nr; j++)
-            scanf("%d",&request[i][j]);
-
-    printf("\nEnter the allocation matrix:");
-    for(i=0; i<np; i++)
-        for(j=0; j<nr; j++)
+    printf("Allocation Matrix:\n");
+    for(int i=0; i<P; i++)
+        for(int j=0; j<R; j++)
             scanf("%d",&alloc[i][j]);
 
-    for(j=0; j<nr; j++)
+    printf("MAX Matrix:\n");
+    for(int i=0; i<P; i++)
+        for(int j=0; j<R; j++)
+            scanf("%d",&mx[i][j]);
+
+    for(int i=0; i<R; i++)
     {
-        avail[j]=r[j];
-        for(i=0; i<np; i++)
-            avail[j] -= alloc[i][j];
+        int sum = 0;
+        for(int j=0; j<P; j++)
+            sum += alloc[j][i];
+        avail[i] = instance[i] - sum;
     }
+    calculateNeed(P, R);
 
-    bool mark[np+3] = {0};
-    for(i=0; i<np; i++)
-    {
-        int cnt=0;
-        for(j=0; j<nr; j++)
-        {
-            if(alloc[i][j]==0)
-                cnt++;
-            else
-                break;
-        }
-        if(cnt==nr)
-            mark[i]=1;
-    }
-
-    for(j=0; j<nr; j++)
-        w[j] = avail[j];
-
-    for(i=0; i<np; i++)
-    {
-        int flag=0;
-        if(mark[i]!=1)
-        {
-            for(j=0; j<nr; j++)
-            {
-                if(request[i][j]<=w[j])
-                    flag=1;
-                else
-                {
-                    flag=0;
-                    break;
-                }
-            }
-            if(flag)
-            {
-                mark[i]=1;
-                for(j=0; j<nr; j++)
-                    w[j]+=alloc[i][j];
-            }
-        }
-    }
-    //checking for unmarked processes
-    int deadlock=0;
-    for(i=0; i<np; i++)
-        if(mark[i]!=1)
-            deadlock=1;
-
-    if(deadlock)
-        printf("\n Deadlock detected");
+    if(isSafety(P, R))
+        cout << "No Deadlock possible\n";
     else
-        printf("\n No Deadlock possible");
+        cout << "Deadlock detected\n";
+    return 0;
 }
